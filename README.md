@@ -33,8 +33,10 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 We need a tire model that tells us how tire force changes as the tire approaches saturation. The common tire model Pacejka Magic Formula sufficiently describes it, because it captures the main nonlinear effect we care about: lateral tire force grows with slip angle, reaches a peak, and then saturates.
 
 <p>
-  <img src="assets/mpc_pacejiko.png" align="right" width="360">
+  <img src="assets/mpc_pacejiko.png" align="right" width="400">
+  
   **F(α) = D sin[C arctan(Bα - E(Bα - arctan(Bα)))]**
+  
   where:
   <ul>
     <li>α - slip angle </li>
