@@ -34,6 +34,7 @@ We need a tire model that tells us how tire force changes as the tire approaches
 
 <p align="center"> F(α) = D sin[C arctan(Bα - E(Bα - arctan(Bα)))] </p>
 <p>
+  <img src="assets/mpc_pacjeiko.png" align="right" width="330">
   where:
   <ul>
     <li>α - slip angle </li>
@@ -42,10 +43,8 @@ We need a tire model that tells us how tire force changes as the tire approaches
     <li> D - peak force level </li>
     <li> E - curvature factor </li>
   </ul>
-
-For the first formulation, this is enough to test the geometric idea: the metric only needs a physically meaningful signal that changes as the tire approaches its force limit.
 </p>
-
+For the first formulation, this is enough to test the geometric idea: the metric only needs a physically meaningful signal that changes as the tire approaches its force limit.
 
 <em>The current formulation simplifies several effects:
 - tire temperature
