@@ -1,4 +1,4 @@
-# Grip-Aware-Riemannian-MPC-for-Vehicle-Planning
+# Grip-Aware Riemannian MPC for Vehicle Planning
 A research concept for making vehicle trajectory optimisation aware of the remaining tire grip by embedding tire physics directly into the geometry used by MPC
 
 **The main idea** is to make a solver use geometry, which bases on physic of the grip, to naturally avoid dangerous zones before they even happen, instead of checking strict boundaries.
@@ -30,7 +30,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 ## From flat space to grip-aware geometry
 <p>
-  <img src="assets/mpc_eu_rim.png" align="right" width="600">
+  <img src="assets/mpc_geom_expl.png" align="right" width="820">
   
   **Euclidean MPC**
   
@@ -40,8 +40,8 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   ds^2 = dx^T dx
   $$
           
-  The same state change has the same geometric cost everywhere.
-  This means the geometry does not know whether the vehicle still has a large grip margin or is already close to tire saturation.
+  The same state change therefore has the same geometric length everywhere.
+  Tire-grip limits can still be added as constraints or penalties, but they remain **external to the geometry itself**.
   
   **Riemannian MPC**
   
@@ -51,12 +51,12 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   ds^2 = dx^T G(x,u)\,dx
   $$
           
-  Now the same state change can become more expensive when it pushes the vehicle closer to the grip limit.
-  This lets the optimiser prefer trajectories that use the available tire force more safely.
+  Now the same state change can have a different geometric cost depending on the physical condition of the vehicle.
+  Near the grip limit, the metric can stretch directions that consume the remaining tire-force capacity, making those parts of a trajectory geometrically longer and less attractive to the optimiser.
 </p>
 
 <p align="center">
-  <i>Same physical space, but a different way of measuring trajectory cost.</i>
+  <i>The physical state space is the same; what changes is how distances inside it are measured.</i>
 </p>
 
 ---
