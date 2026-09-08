@@ -121,187 +121,99 @@ _We use the friction circle as a first approximation of combined tire demand. It
 
 ---
 
-## Grip-aware metric concept
+## Building the grip-aware metric
 
-The exact final form of the metric is still under development.
+We now combine the two previous ideas:
+- tire utilisation tells us how close each tire is to saturation
+- Riemannian geometry lets the cost of motion change with the vehicle state
 
-Conceptually, the metric should satisfy two ideas:
-**1. Direction**
-  The metric should identify which directions in state space increase tire utilisation.
-  For example, a change in lateral velocity, yaw rate, steering demand, or longitudinal acceleration may move the vehicle closer to saturation.
+The metric should use this information to make state changes that consume the remaining grip more expensive.
 
-A gradient such as
-
-\[
-\nabla_x \eta_i
-\]
-
-can describe the direction in state space that increases utilisation for tire \(i\).
-
-**2. Magnitude**
-The deformation should become stronger as the remaining grip becomes smaller.
-So the metric can be thought of schematically as
-
-\[
-G_{\text{grip}}
-=
-G_0
-+
-\text{grip-dependent deformation}
-\]
-
-where:
-
-- \(G_0\) is the base metric
-- the deformation acts mainly along directions that increase tire demand
-- the deformation grows as tire utilisation approaches the grip limit
-
-The exact weighting law is intentionally left open at this stage and must be derived and validated mathematically.
-
-<p align="center">
-  <img src="assets/grip_metric_concept.png" width="760">
-</p>
+In simple terms: **the closer the tire is to its limit, the more strongly the geometry should penalise motion that pushes it further toward saturation.**
 
 ---
 
-## How this changes trajectory optimisation
+## Using the metric inside MPC
 
-A trajectory can be assigned a Riemannian cost of the form
+Once the metric is defined, it becomes part of the trajectory cost:
 
-\[
-J
-=
+$$
+J =
 \int_0^T
-\dot{x}^{T}
-G(x,u)
+\dot{x}^T
+G_{\text{grip}}(x)
 \dot{x}
 \,dt
-\]
+$$
 
-- If the vehicle remains in a high-grip region, the metric stays close to the base geometry.
-- If a candidate trajectory enters a near-saturation state, the metric increases the cost of motion in directions that consume the remaining grip.
+<p>
+  <img src="assets/mpc_traj.png" align="right" width="760">
+  <ul>
+    <li> A trajectory that stays far from saturation remains relatively cheap. </li>
+    <li> A trajectory that moves through near-limit states becomes geometrically longer and more expensive. </li>
+  </ul> <br> <br>
+  
+  The optimiser can therefore prefer actions such as:
+  <ul>
+    <li> braking earlier </li>
+    <li> reducing corner-entry speed </li>
+    <li> using a smoother steering input </li>
+    <li> choosing a path with more available grip </li>
+  </ul>
+</p>
 
-As a result, a risky trajectory becomes geometrically longer.
-
-The optimiser can then prefer alternatives such as:
-- braking earlier
-- reducing corner entry speed
-- choosing a smoother steering profile
-- shifting toward a trajectory with more available grip
-
-The goal is not to remove physical constraints, but to make the optimiser aware of the approaching limit before the constraint becomes active.
+The main idea is simple:
+> **the controller does not only check the grip limit — the trajectory cost already changes as the vehicle approaches it.**
 
 ---
 
-## Riemannian MPC concept
+## Changing the geometry creates a new optimisation problem
 
-The proposed MPC formulation would combine:
-
-1. a nonlinear vehicle model
-2. nonlinear tire-force modelling
-3. tire utilisation
-4. a state-dependent Riemannian metric
-5. trajectory optimisation using the resulting geometric cost
-
-The resulting trajectory should approximately follow a low-cost path through the grip-aware geometry rather than only minimising Euclidean tracking error.
-
-<p align="center">
-  <img src="assets/grip_geometry_path.png" width="760">
+<p>
+  <img src="assets/mpc_dist.png" align="right" width="300">
+  In Euclidean space, straight-line distances are cheap to compute. In a state-dependent metric, the low-cost trajectory follows a **geodesic** - the shortest path according to the grip-aware geometry.<br>
+  Finding this path repeatedly inside MPC can be computationally expensive, especially when the geometry changes with the vehicle state.<br><br>
+  
+  **This creates a practical challenge**: the geometry may improve the trajectory cost, but the solver still has to find the geodesic fast enough for real-time control.
 </p>
 
 ---
 
 ## Neural geodesic warm-start
 
-Riemannian trajectory optimisation may be more expensive than conventional MPC.
+To reduce this computational cost, the planned AI extension is a lightweight neural warm-start.
+<p>
+  <img src="assets/mpc_geo.png" align="right" width="760">
+  
+  **Offline**
+  <ol>
+    <li> Run the Riemannian MPC solver on many vehicle states and grip conditions.</li>
+    <li> Store the resulting optimised trajectories. </li>
+    <li> Train a neural network to predict a good initial trajectory. </li>
+  </ol>
+  
+  **Online**
+  <ol>
+    <li> Observe the current vehicle state. </li>
+    <li> Predict a geometry-aware initial trajectory. </li>
+    <li> Use it as the starting point for Riemannian MPC. </li>
+    <li> Let MPC perform the final physics-based optimisation. </li>
+  </ol>
+</p>
 
-A possible AI extension is therefore a lightweight neural warm-start.
-
-### Offline
-
-1. Solve the Riemannian MPC problem for many vehicle states and road conditions.
-2. Store state → optimised trajectory pairs.
-3. Train a neural network to predict a good initial trajectory.
-
-### Online
-
-1. Observe the current vehicle state.
-2. Predict a geometry-aware initial trajectory.
-3. Use this trajectory as the starting point for the MPC solver.
-4. Let MPC perform the final constrained optimisation.
-
-The neural network would not replace the controller.
-
-Its purpose would be to reduce solver iterations while keeping the final trajectory inside the physics-based optimisation framework.
-
----
-
-## What still needs to be proved
-
-This project is currently a research formulation, so several mathematical questions are still open.
-
-### Metric validity
-
-The final metric must be shown to be:
-
-- symmetric
-- positive definite
-- sufficiently smooth
-- numerically well-conditioned
-- physically meaningful near the grip limit
-
-### Geodesic behaviour
-
-The geometry should be studied to determine:
-
-- whether valid geodesics exist
-- whether they are unique in the operating region
-- how they behave near strong grip deformation
-- whether the geodesic optimisation converges reliably
-
-### MPC stability
-
-The final controller should also require a stability analysis.
-
-A planned direction is to study a Lyapunov function \(V(x)\) and establish conditions such as
-
-\[
-V(x_{k+1}) - V(x_k) \leq 0
-\]
-
-along the closed-loop trajectory.
-
-The goal would be to show that the grip-aware cost changes the optimisation geometry without destroying closed-loop stability.
-
-### Real-time feasibility
-
-The project must also test whether the additional geometric computations are practical for real-time control.
-
-This includes:
-
-- metric evaluation cost
-- geodesic computation
-- MPC convergence time
-- benefit of neural warm-start
-- sensitivity to friction estimation errors
+The neural network does not replace MPC. Its role is only to give the optimiser a better starting point so that fewer solver iterations may be needed.
 
 ---
 
-## Current status
+## What comes next
 
-Completed so far:
-- physical problem formulation
-- Pacejka-based grip analysis
-- combined tire-utilisation formulation
-- Riemannian geometry interpretation
-- preliminary grip-aware metric concept
-- neural geodesic warm-start concept
+The next steps are to:
+- derive and verify the final grip-aware metric
+- integrate it into MPC and study geodesic convergence
+- check closed-loop stability
+- test whether neural warm-start improves real-time performance
+- validate the method on low-grip driving data
 
-Still in progress:
-- final analytical metric derivation
-- implementation in the vehicle model
-- proof of metric properties
-- geodesic convergence analysis
-- Lyapunov stability analysis
+_No experimental results are claimed yet._
 - MPC integration
 - real-data validation
