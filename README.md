@@ -33,7 +33,6 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   <img src="assets/mpc_geom_expl.png" align="right" width="450">
   
   **Euclidean MPC**
-  
   Standard MPC usually measures trajectory changes in a fixed Euclidean space:
        
   $$
