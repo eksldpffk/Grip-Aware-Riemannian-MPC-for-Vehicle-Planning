@@ -62,9 +62,9 @@ _The simplification is intentional: it lets us isolate and test the Riemannian f
 ## Combined tire usage
 
 Pacejka gives us the nonlinear tire-force behaviour, but the controller also needs a single measure of **how much of the available tire-force capacity is currently being used**.
-Braking and cornering use the same tire-road contact, so longitudinal and lateral forces compete for the same available grip. We therefore combine them into a single utilisation value:
-η<sub>i</sub> = $$\sqrt{($\frac{F<sub>x,i</sub>}{μ * F<sub>z,i</sub>}$)<sup>2</sup> + ($\frac{F<sub>y,i</sub>}{μ * F<sub>z,i</sub>}$)<sup>2</sup>}$$
-for tire i, where:
+Braking and cornering use the same tire-road contact, so longitudinal and lateral forces compete for the same available grip. We therefore combine them into a single utilisation value for tire i:
+$$\eta_i = \sqrt{\left(\frac{F_{x,i}}{\mu F_{z,i}}\right)^2 + \left(\frac{F_{y,i}}{\mu F_{z,i}}\right)^2}$$
+where:
 - F<sub>x</sub> - longitudinal force
 - F<sub>y</sub> - lateral force
 - F<sub>z</sub> - vertical tire load
