@@ -15,7 +15,8 @@ A research concept for making vehicle trajectory optimisation aware of the remai
 <p>
   <img src="assets/mpc_problem_GL.png" align="right" width="330">
   This is especially important/dangerous during:
-  <ul> <li> high-speed cornering </li>
+  <ul> 
+    <li> high-speed cornering </li>
     <li> hard braking </li>
     <li> combined braking and steering </li>
     <li> low-grip road conditions </li>
@@ -41,8 +42,9 @@ We need a tire model that tells us how tire force changes as the tire approaches
     <li> D - peak force level </li>
     <li> E - curvature factor </li>
   </ul>
-</p>
+
 For the first formulation, this is enough to test the geometric idea: the metric only needs a physically meaningful signal that changes as the tire approaches its force limit.
+</p>
 
 <p>
 <em>The current formulation simplifies several effects:
