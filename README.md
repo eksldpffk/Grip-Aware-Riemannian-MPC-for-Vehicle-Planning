@@ -51,7 +51,7 @@ For the first formulation, this is enough to test the geometric idea: the metric
 
 <em>The current formulation simplifies several effects (tire temperature, tire wear, transient tire dynamics, detailed load transfer, road surface variation along the contact patch, full combined-slip behaviour etc.) </em>
 
-_The simplification is intentional: it lets us isolate and test the Riemannian formulation first. More detailed tire physics can later replace the simplified model without changing the basic geometric framework. More detailed tire physics can be added later without changing the main Riemannian idea._
+_The simplification is intentional: it lets us isolate and test the Riemannian formulation first. More detailed tire physics can later replace the simplified model without changing the basic geometric framework._
 
 ---
 
