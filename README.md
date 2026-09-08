@@ -30,9 +30,10 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 ## From flat space to grip-aware geometry
 <p>
-  <img src="assets/mpc_geom_expl.png" align="right" width="450">
+  <img src="assets/mpc_geom_expl.png" align="right" width="400">
   
   <b>Euclidean MPC</b>
+  
   Standard MPC usually measures trajectory changes in a fixed Euclidean space:
        
   $$
@@ -51,8 +52,6 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
           
   The geometry itself changes with grip. Near the limit, risky directions become longer and more expensive before the constraint is reached.
 </p>
-
-
 
 <p align="center">
   
