@@ -33,6 +33,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   <img src="assets/mpc_eu_rim.png" align="right" width="600">
   
   **Euclidean MPC**
+  
   Standard MPC usually measures trajectory changes in a fixed Euclidean space:
        
   $$
@@ -43,6 +44,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   This means the geometry does not know whether the vehicle still has a large grip margin or is already close to tire saturation.
   
   **Riemannian MPC**
+  
   Riemannian geometry allows the metric to change with the vehicle state:
           
   $$
