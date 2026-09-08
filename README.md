@@ -13,7 +13,7 @@ A research concept for making vehicle trajectory optimisation aware of the remai
 1. **Physical level (Tire grip become nonlinear):** At the grip limit, the classical linear control model completely breaks down. The car stops following the steering commands.
 2. **Mathematical Level (Loss of Convexity):** To calculate a path within 10 ms, standard MPC either gets trapped in a dangerous local minimum or completely freezes due to numerical failure.
 <p>
-  <img src="assets/mpc_problem_GL.png" align="right" width="400">
+  <img src="assets/mpc_problem_GL.png" align="right" width="330">
   This is especially important/dangerous during:
   <ul>
     <li> high-speed cornering </li>
