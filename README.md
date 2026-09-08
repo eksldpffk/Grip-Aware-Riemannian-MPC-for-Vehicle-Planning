@@ -164,7 +164,7 @@ $$
 </p>
 
 The main idea is simple:
-> **the controller does not only check the grip limit — the trajectory cost already changes as the vehicle approaches it.**
+> **the controller does not only check the grip limit - the trajectory cost already changes as the vehicle approaches it.**
 
 ---
 
