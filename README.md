@@ -30,7 +30,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 ## From flat space to grip-aware geometry
 <p>
-  <img src="assets/mpc_geom_expl.png" align="right" width="500">
+  <img src="assets/mpc_geom_expl.png" align="right" width="515">
   
   **Euclidean MPC**
   
@@ -40,9 +40,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   ds^2 = dx^T dx
   $$
           
-  The same state change therefore has the same geometric length everywhere.
-  
-  Tire-grip limits can still be added as constraints or penalties, but they remain **external to the geometry itself**.
+  The geometry treats every direction the same. Grip only appears later as a constraint or penalty, and can't be counted beforehand.
   
   **Riemannian MPC**
   
@@ -52,13 +50,11 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   ds^2 = dx^T G(x,u)\,dx
   $$
           
-  Now the same state change can have a different geometric cost depending on the physical condition of the vehicle.
-  
-  Near the grip limit, the metric can stretch directions that consume the remaining tire-force capacity, making those parts of a trajectory geometrically longer and less attractive to the optimiser.
+  The geometry itself changes with grip. Near the limit, risky directions become longer and more expensive before the constraint is reached.
 </p>
 
 <p align="center">
-  <i>The physical state space is the same; what changes is how distances inside it are measured.</i>
+  <i>Instead of only checking the grip limit, we make the optimiser “feel” it through the geometry in advance.</i>
 </p>
 
 ---
