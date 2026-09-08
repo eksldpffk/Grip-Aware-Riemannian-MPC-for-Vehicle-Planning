@@ -29,41 +29,28 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 ---
 
 ## From flat space to grip-aware geometry
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-    
-      **Euclidean MPC**
-      Standard MPC usually measures trajectory changes in a fixed Euclidean space:
-      
-      $$
-      ds^2 = dx^T dx
-      $$
-      
-      The same state change has the same geometric cost everywhere.
-      This means the geometry does not know whether the vehicle still has a large grip margin or is already close to tire saturation.
-    
-    </td>
-    
-    <td width="50%" valign="top">
-    
-      **Riemannian MPC**
-      Riemannian geometry allows the metric to change with the vehicle state:
-      
-      $$
-      ds^2 = dx^T G(x,u)\,dx
-      $$
-      
-      Now the same state change can become more expensive when it pushes the vehicle closer to the grip limit.
-      This lets the optimiser prefer trajectories that use the available tire force more safely.
-    
-    </td>
-  </tr>
-</table>
-
-<p align="center">
-  <img src="assets/mpc_eu_rim.png" width="760">
+<p>
+  <img src="assets/mpc_eu_rim.png" align="right" width="600">
+  
+  **Euclidean MPC**
+  Standard MPC usually measures trajectory changes in a fixed Euclidean space:
+       
+  $$
+  ds^2 = dx^T dx
+  $$
+          
+  The same state change has the same geometric cost everywhere.
+  This means the geometry does not know whether the vehicle still has a large grip margin or is already close to tire saturation.
+  
+  **Riemannian MPC**
+  Riemannian geometry allows the metric to change with the vehicle state:
+          
+  $$
+  ds^2 = dx^T G(x,u)\,dx
+  $$
+          
+  Now the same state change can become more expensive when it pushes the vehicle closer to the grip limit.
+  This lets the optimiser prefer trajectories that use the available tire force more safely.
 </p>
 
 <p align="center">
