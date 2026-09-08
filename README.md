@@ -47,7 +47,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   Riemannian geometry allows the metric to change with the vehicle state:
           
   $$
-  ds^2 = dx^T G(x,u)\dx
+  ds^2 = dx^T G(x,u) dx
   $$
           
   The geometry itself changes with grip. Near the limit, risky directions become longer and more expensive before the constraint is reached.
