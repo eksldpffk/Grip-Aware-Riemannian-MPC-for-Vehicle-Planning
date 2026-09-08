@@ -80,8 +80,8 @@ where:
 
 This gives the metric a continuous signal of how close the tire is to its assumed force limit. 
 Interpretation:
-- \( η<sub>i</sub> \ll 1 \) → large remaining grip
-- \( η<sub>i</sub> \rightarrow 1 \) → tire close to saturation
+- $\eta_i \ll 1$ → large remaining grip
+- $\eta_i \rightarrow 1$ → tire close to saturation
 
 With the same friction coefficient μ, the utilisation still changes with the current driving condition:
 - straight and steady driving → low η
