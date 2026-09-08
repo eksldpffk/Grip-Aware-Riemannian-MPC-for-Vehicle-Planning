@@ -33,24 +33,27 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 We need a tire model that tells us how tire force changes as the tire approaches saturation. The common tire model Pacejka Magic Formula sufficiently describes it, because it captures the main nonlinear effect we care about: lateral tire force grows with slip angle, reaches a peak, and then saturates.
 
 <p align="center"> F(α) = D sin[C arctan(Bα - E(Bα - arctan(Bα)))] </p>
-where:
-- α - slip angle
-- B - stiffness factor
-- C - shape factor
-- D - peak force level
-- E - curvature factor
-
+<p>
+  where:
+  <ul>
+    <li>α - slip angle </li>
+    <li> B - stiffness factor </li>
+    <li> C - shape factor </li>
+    <li> D - peak force level </li>
+    <li> E - curvature factor </li>
+  </ul>
+</p>
 For the first formulation, this is enough to test the geometric idea: the metric only needs a physically meaningful signal that changes as the tire approaches its force limit.
 
-_The current formulation simplifies several effects:
+<em>The current formulation simplifies several effects:
 - tire temperature
 - tire wear
 - transient tire dynamics
 - detailed load transfer
 - road surface variation along the contact patch
-- full combined-slip behaviour
+- full combined-slip behaviour </em>
 
-The simplification is intentional: it lets us isolate and test the Riemannian formulation first. More detailed tire physics can later replace the simplified model without changing the basic geometric framework. More detailed tire physics can be added later without changing the main Riemannian idea._
+_The simplification is intentional: it lets us isolate and test the Riemannian formulation first. More detailed tire physics can later replace the simplified model without changing the basic geometric framework. More detailed tire physics can be added later without changing the main Riemannian idea._
 
 ---
 
