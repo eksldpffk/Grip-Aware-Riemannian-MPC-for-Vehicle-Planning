@@ -30,7 +30,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 ## From flat space to grip-aware geometry
 <p>
-  <img src="assets/mpc_geom_expl.png" align="right" width="515">
+  <img src="assets/mpc_geom_expl.png" align="right" width="500">
   
   **Euclidean MPC**
   
