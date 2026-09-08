@@ -28,6 +28,54 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 ---
 
+## From flat space to grip-aware geometry
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Euclidean MPC
+
+Standard MPC usually measures trajectory changes in a fixed Euclidean space:
+
+$$
+ds^2 = dx^T dx
+$$
+
+The same state change has the same geometric cost everywhere.
+
+This means the geometry does not know whether the vehicle still has a large grip margin or is already close to tire saturation.
+
+</td>
+
+<td width="50%" valign="top">
+
+### Riemannian MPC
+
+Riemannian geometry allows the metric to change with the vehicle state:
+
+$$
+ds^2 = dx^T G(x,u)\,dx
+$$
+
+Now the same state change can become more expensive when it pushes the vehicle closer to the grip limit.
+
+This lets the optimiser prefer trajectories that use the available tire force more safely.
+
+</td>
+</tr>
+</table>
+
+<p align="center">
+  <img src="assets/mpc_eu_rim.png" width="760">
+</p>
+
+<p align="center">
+  <i>Same physical space, but a different way of measuring trajectory cost.</i>
+</p>
+
+---
+
 ## Tire physics
 
 We need a tire model that tells us how tire force changes as the tire approaches saturation. The common tire model Pacejka Magic Formula sufficiently describes it, because it captures the main nonlinear effect we care about: lateral tire force grows with slip angle, reaches a peak, and then saturates.
@@ -87,36 +135,6 @@ With the same friction coefficient μ, the utilisation still changes with the cu
 This gives the metric a continuous signal of how close the tire is to its assumed force limit.
 
 _We use the friction circle as a first approximation of combined tire demand. It does not give an exact remaining-grip value, but it changes with the current longitudinal and lateral forces. This is enough to test the geometric formulation. A higher-fidelity combined-slip model will be needed later for precise real-world grip estimation._
-
----
-
-## From grip constraints to geometry
-
-Standard MPC commonly treats tire limits as constraints or penalty terms.
-
-This project explores a different formulation: **use tire-grip information to change the geometry in which trajectories are measured.**
-
-In Euclidean space,
-
-\[
-ds^2 = dx^T dx
-\]
-
-so the same state change has the same length everywhere.
-
-In a state-dependent Riemannian geometry,
-
-\[
-ds^2 = dx^T G(x,u)\,dx
-\]
-
-where \(G(x,u)\) is a metric tensor that depends on the current vehicle state and possibly the control input.
-
-This means that the same physical state change can be measured differently depending on how close the tires are to their grip limit.
-
-<p align="center">
-  <img src="assets/euclidean_vs_riemannian.png" width="760">
-</p>
 
 ---
 
@@ -283,34 +301,6 @@ This includes:
 - MPC convergence time
 - benefit of neural warm-start
 - sensitivity to friction estimation errors
-
----
-
-## Planned validation
-
-The method should eventually be compared against conventional approaches such as:
-
-- standard nonlinear MPC
-- MPC with explicit friction constraints
-- robust / uncertainty-aware MPC
-- learned vehicle-dynamics MPC
-
-Possible evaluation scenarios include:
-- wet road
-- low-friction surface
-- emergency braking
-- sharp cornering
-- combined braking and steering
-- rapid changes in available grip
-
-Useful metrics would include:
-- constraint violation rate
-- minimum grip margin
-- trajectory tracking error
-- solver convergence rate
-- computation time
-- closed-loop stability
-- control smoothness
 
 ---
 
