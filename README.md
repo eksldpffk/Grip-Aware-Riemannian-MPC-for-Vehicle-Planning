@@ -147,7 +147,7 @@ G_{\text{grip}}(x)
 $$
 
 <p>
-  <img src="assets/mpc_traj.png" align="right" width="320">
+  <img src="assets/mpc_traj.png" align="right" width="350">
   <ul>
     <li> A trajectory that stays far from saturation remains relatively cheap. </li>
     <li> A trajectory that moves through near-limit states becomes geometrically longer and more expensive. </li>
@@ -183,7 +183,7 @@ The main idea is simple:
 
 To reduce this computational cost, the planned AI extension is a lightweight neural warm-start.
 <p>
-  <img src="assets/mpc_geo.png" align="right" width="450">
+  <img src="assets/mpc_geo.png" align="right" width="500">
   
   **Offline**
   <ol>
