@@ -53,6 +53,8 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
   The geometry itself changes with grip. Near the limit, risky directions become longer and more expensive before the constraint is reached.
 </p>
 
+
+
 <p align="center">
   <i>Instead of only checking the grip limit, we make the optimiser “feel” it through the geometry in advance.</i>
 </p>
