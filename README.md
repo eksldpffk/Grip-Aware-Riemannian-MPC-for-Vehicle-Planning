@@ -56,6 +56,7 @@ As a result, a trajectory may therefore look short or attractive geometrically, 
 
 
 <p align="center">
+  
   <i>Instead of only checking the grip limit, we make the optimiser “feel” it through the geometry in advance.</i>
 </p>
 
