@@ -45,6 +45,7 @@ We need a tire model that tells us how tire force changes as the tire approaches
 </p>
 For the first formulation, this is enough to test the geometric idea: the metric only needs a physically meaningful signal that changes as the tire approaches its force limit.
 
+<p>
 <em>The current formulation simplifies several effects:
 - tire temperature
 - tire wear
@@ -52,7 +53,7 @@ For the first formulation, this is enough to test the geometric idea: the metric
 - detailed load transfer
 - road surface variation along the contact patch
 - full combined-slip behaviour </em>
-
+</p>
 _The simplification is intentional: it lets us isolate and test the Riemannian formulation first. More detailed tire physics can later replace the simplified model without changing the basic geometric framework. More detailed tire physics can be added later without changing the main Riemannian idea._
 
 ---
