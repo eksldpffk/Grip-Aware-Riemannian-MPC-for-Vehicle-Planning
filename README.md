@@ -146,12 +146,13 @@ G_{\text{grip}}(x)
 \,dt
 $$
 
+
 <p>
   <img src="assets/mpc_traj.png" align="right" width="350">
   <ul>
     <li> A trajectory that stays far from saturation remains relatively cheap. </li>
     <li> A trajectory that moves through near-limit states becomes geometrically longer and more expensive. </li>
-  </ul> <br> <br>
+  </ul>
   
   The optimiser can therefore prefer actions such as:
   <ul>
